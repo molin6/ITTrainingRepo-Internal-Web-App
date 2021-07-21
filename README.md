@@ -1,5 +1,4 @@
 # ITTrainingRepo-Internal-Web-App
-# OVERVIEW
 The IT Training Repo is an internal web app exclusively for IT. Employees are able to see and add upcoming training events, add training opportunities they have taken advantage of and rate/comment on those opportunities, lastly employees are able to browse opportunities taken by other employees and determine if it would benefit them.
 Upcoming Opportunities
 On login the Upcoming Opportunities Calendar will be displayed. Clicking an event will allow you to see more details and also allow you to copy to your Google calendar.
