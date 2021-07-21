@@ -1,0 +1,45 @@
+{% load static %}
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="{%  url 'it_training_repo:index' %}">
+        <img src="{% static "it_training_repo/images/Simmons-Logo.png" %}" alt="Simmons Foods">
+    </a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">IT Training Repo<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'it_training_repo:list_opportunity' %}">Opportunities<span class="sr-only"></span></a>
+            </li>
+            <li class="nav-item dropdown">
+                <a
+                    class="nav-link dropdown-toggle"
+                    href="#"
+                    id="category-dropdown"
+                    role="button"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                >Categories</a>
+                <div class="dropdown-menu" aria-labelledby="category-dropdown">
+                    {% for category in categories %}
+                    <a class="dropdown-item" href="{% url 'it_training_repo:list_opportunity' %}?search_field=category__name&search_value={{ category.name }}">{{category.name}}</a>
+                    {% endfor %}
+                </div>
+            </li>
+
+        </ul>
+        <div class="navbar-nav">
+            {% if user.is_authenticated %}
+                <a class="nav-link" href="{% url 'it_training_repo:logout' %}">Logout</a>
+            {% else %}
+                <a class="nav-link" href="{% url 'it_training_repo:login' %}">Login</a>
+            {% endif %}
+        </div>
+    </div>
+</nav>

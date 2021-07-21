@@ -1,0 +1,8 @@
+{%  extends 'it_training_repo/layout.html' %}
+{% block content %}
+<h2>Upcoming Opportunities &emsp;<input type="button" value="Full Calendar" class="btn btn-primary" onclick="location.href='{% url 'it_training_repo:upcoming_opportunity' %}'"></h2>
+<!--To get the iframe for google calendar: go to settings and sharing of calendar,make sure it is public, under integrate calendar click customize-->
+<iframe src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23004c97&amp;ctz=America%2FChicago&amp;
+src=Y19oM2cxbWQzNnFxdW1vN3FrbHQyZGRnczRsNEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&amp;color=%23EF6C00&amp;showTitle=0&amp;showTabs=0&amp;
+mode=AGENDA&amp;showPrint=0&amp;showCalendars=0&amp;showNav=0" style="border-width:0" width="900" height="600" frameborder="0" scrolling="no"></iframe>
+{% endblock %}

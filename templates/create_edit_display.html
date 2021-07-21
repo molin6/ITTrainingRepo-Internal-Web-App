@@ -1,0 +1,73 @@
+{%  extends 'it_training_repo/layout.html' %}
+{% load ratings %}
+{% load static %}
+{% block content %}
+
+<h2>{{ form.page_title }}</h2>
+
+{% if form.view_verb != 'display' %}
+<form method="POST" enctype="multipart/form-data" id="opportunityform"> 
+    <div class="form-group">
+  
+    <!-- Security token -->
+    {% csrf_token %} 
+  
+    <!-- Using the formset -->
+    {{ form }} 
+    <br/>
+    {% if form.view_verb == 'edit' %}
+    <br/>
+      {% ratings instance template_name='it_training_repo/stars_with_comments.html' %}
+    {% else %} 
+      <b>Note:</b> <i>To rate this item, first save it, and then edit it.</i>
+    {% endif %}
+    <br/>
+    <br/>
+    <input type="button" value="Submit" class="btn btn-success" onclick="saveforms()"> 
+    <a href="javascript:history.go(-1);" type="button" class="btn btn-dark">Cancel</a>
+    </div>
+</form> 
+{% else %}
+  <table
+    class="table table-striped table-bordered"
+    style="width:100%"
+  >
+    {% for field_spec in item %}
+      <tr>
+        <th>{{ field_spec.name }}:</th>
+        <td>
+          {% if field_spec.name == 'Link' %}
+          <a title="{{ field_spec.value }}" href="{{ field_spec.value }}" target=_blank>{{ field_spec.value }} <i class='fas fa-external-link-square-alt'></i></a>
+          {% elif field_spec.name == 'Average Rating' %}
+            {% ratings instance read_only=True template_name='it_training_repo/static_stars.html' %}
+            <br/>
+            ({{ field_spec.value }} stars)
+          {% else %}
+          {{ field_spec.value }}
+          {% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+  <b>Note:</b> <i>To rate this item, click edit, and then rate.</i>
+  <br></br>
+<a href="{% url form.edit_view id=instance.id %}" type="button" class="btn btn-primary">Edit</a>
+<a href="{% url form.delete_view id=instance.id %}" type="button" class="btn btn-danger">Delete</a>
+    <a href="javascript:history.go(-1);" type="button" class="btn btn-dark">Cancel</a>
+{% endif %}
+
+<script src="{% static 'it_training_repo/js/rating_comment.js' %}"></script>
+<table
+ class="table table-striped table-bordered"
+ style="width:100%">
+  <tbody>
+    <h2>Comments</h2> 
+    {% for user_rating_comment in user_rating_comments %}
+    <tr>
+      <td>User {{ user_rating_comment.user_rating.user.username }} rated {{ user_rating_comment.user_rating.score }} stars</td>
+      <td>{{ user_rating_comment.text }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table> 
+{% endblock %}
